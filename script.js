@@ -1,55 +1,79 @@
 const list = document.querySelector('ul')
-const showProducts = document.querySelector('.show-products')
-const calculateDiscount = document.querySelector('.calculate-discount')
-const sumPrices = document.querySelector('.sumPrices')
-const showVeganProducts = document.querySelector('.show-vegans')
+const showStates = document.querySelector('.show-states')
+const showNorthStates = document.querySelector('.north-states')
+const showNorthEastStates = document.querySelector('.northeast-states')
+const showMidWestStates = document.querySelector('.midwest-states')
+const showSouthEastStates = document.querySelector('.southeast-states')
+const showSouthStates = document.querySelector('.south-states')
+const showStatesQuantity = document.querySelector('.states-quantity')
+
 
 // mostrar todos os produtos
-function showAllProducts(arrayProducts) {
+function showAllStates(arrayStates) {
     let myListItems = ''
 
-    arrayProducts.forEach(product => {
+    arrayStates.forEach(state => {
         myListItems += `
             <li>
-                <img src=${product.src}>
-                <p>${product.name}</p>
-                <p class="price">R$${(product.price).toFixed(2)}</p>
+                <img src=${state.src}>
+                <p class="state-name">${state.name}</p>
+                <p><b>Capital:</b> ${state.capital}</p>
             </li>
         `
         list.innerHTML = myListItems
     })
 }
 
-// mapear e adicionar 10% de desconto ao preço de cada produto
-function calculate() {
-    const newPrice = menuOptions.map(product => ({
-        ...product,
-        price: product.price - product.price / 10 // ou product.price * 0.9 para ter 10% de desconto
-    }))
-    showAllProducts(newPrice)
+function northStates() {
+    const north = brazilianStates.filter(state => {
+        return state.region === 'norte'
+    })
+    showAllStates(north)
 }
 
-// somar todos os preços
-function calculatePrices() {
-    const sumPrices = menuOptions.reduce((price, currentPrice) => {
-        return price + currentPrice.price
-    }, 0)
-    list.innerHTML = `
-        <li>
-            <p>O valor total dos produtos é de: R$${(sumPrices).toFixed(2)}</p>
-        </li>
+function northEastStates() {
+    const northeast = brazilianStates.filter(state => {
+        return state.region === 'nordeste'
+    })
+    showAllStates(northeast)
+}
+
+function midwestStates() {
+    const midwest = brazilianStates.filter(state => {
+        return state.region === 'centro-oeste'
+    })
+    showAllStates(midwest)
+}
+
+function southEastStates(){
+    const southeast = brazilianStates.filter(state => {
+        return state.region === 'sudeste'
+    })
+    showAllStates(southeast)
+}
+
+function southStates(){
+    const south = brazilianStates.filter(state => {
+        return state.region === 'sul'
+    })
+    showAllStates(south)
+}
+
+function statesQuantity(){
+    const quantity = brazilianStates.length
+    
+   list.innerHTML = `
+        <div>
+            <h1>O brasil possui ${quantity} estados</h1>
+        <div/>
     `
 }
 
-// filtrar apenas os produtos veganos
-function veganProducts() {
-    const vegans = menuOptions.filter(product => {
-        return product.vegan === true
-    })
-    showAllProducts(vegans)
-}
+showStates.addEventListener('click', () => showAllStates(brazilianStates))
+showNorthStates.addEventListener('click', northStates)
+showNorthEastStates.addEventListener('click', northEastStates)
+showMidWestStates.addEventListener('click', midwestStates)
+showSouthEastStates.addEventListener('click', southEastStates)
+showSouthStates.addEventListener('click', southStates)
+showStatesQuantity.addEventListener('click', statesQuantity)
 
-showProducts.addEventListener('click', () => showAllProducts(menuOptions))
-calculateDiscount.addEventListener('click', calculate)
-sumPrices.addEventListener('click', calculatePrices)
-showVeganProducts.addEventListener('click', veganProducts)
